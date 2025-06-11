@@ -144,87 +144,68 @@ const handleDogUpload = async(e) => {
 
 
   return (
-    <>
-      {message && <p>{message}</p>}
- 
- 
-      <div>
-        <h2>Single File Uploader</h2>
-        <form onSubmit={handleSingleUpload}>
-          <input
-            type="file"
-            onChange={(e) => {
-              setSingleFile(e.target.files[0]);
-            }}
-            required
-          />
-          <br />
-          <button type="submit">Upload</button>
-        </form>
-        <button type="button" onClick={fetchSingleFile}>
-          Fetch Random Image
-        </button>
-        {displaySingleFile && (
-          <div>
-            <h4>Fetched Image:</h4>
-            <img
-              src={displaySingleFile}
-              alt="Fetched from server"
-              style={{ maxWidth: "300px" }}
-            />
-          </div>
-        )}
-      </div>
- 
- 
-      <div>
-        <h2>Multiple File Uploader</h2>
-        <form onSubmit={uploadMultipleFiles}>
-          <input
-            type="file"
-            onChange={(e) => {
-              setMultipleFiles(Array.from(e.target.files));
-              // ❌ ERROR: `Array.e.target.files` is invalid JavaScript.
-              // ✅ FIX: Use `Array.from(e.target.files)` or just `e.target.files`
-            }}
-            required
-            multiple
-          />
-          <br />
-          <button type="submit">Upload</button>
-        </form>
-        <button type="button" onClick={fetchMultipleFiles}>
-          Fetch Multiple Random Images
-        </button>
-        {displayMultipleFiles &&
-          displayMultipleFiles.map((imageURL, index) => (
-            <div key={index}>
-              <img
-                src={imageURL}
-                alt={`Fetched ${index}`}
-                style={{ width: "300px" }}
-              />
-            </div>
+  <div className="container">
+    {message && <p className="message">{message}</p>}
+
+    <div className="section">
+      <h2>Single File Uploader</h2>
+      <form onSubmit={handleSingleUpload} className="form">
+        <input
+          type="file"
+          onChange={(e) => setSingleFile(e.target.files[0])}
+          required
+          className="input"
+        />
+        <button type="submit" className="btn">Upload</button>
+      </form>
+      <button type="button" onClick={fetchSingleFile} className="btn secondary">
+        Fetch Random Image
+      </button>
+      {displaySingleFile && (
+        <div className="image-preview">
+          <h4>Fetched Image:</h4>
+          <img src={displaySingleFile} alt="Fetched from server" />
+        </div>
+      )}
+    </div>
+
+    <div className="section">
+      <h2>Multiple File Uploader</h2>
+      <form onSubmit={uploadMultipleFiles} className="form">
+        <input
+          type="file"
+          onChange={(e) => setMultipleFiles(Array.from(e.target.files))}
+          required
+          multiple
+          className="input"
+        />
+        <button type="submit" className="btn">Upload</button>
+      </form>
+      <button type="button" onClick={fetchMultipleFiles} className="btn secondary">
+        Fetch Multiple Random Images
+      </button>
+      {displayMultipleFiles.length > 0 && (
+        <div className="image-grid">
+          {displayMultipleFiles.map((imgUrl, index) => (
+            <img key={index} src={imgUrl} alt={`Image ${index}`} />
           ))}
-        {/* ❌ ERROR: If `displayMultipleFiles` was initialized as `null`, map would throw. */}
-        {/* ✅ FIX: Initialize it as an empty array: useState([]) */}
-      </div>
+        </div>
+      )}
+    </div>
 
-<div>
-<h4>Fetch the Dog</h4>
-<button onClick={fetchDogImage}>Doggy</button>
-{displayDogImage && (
-    <div>
-    <img src={displayDogImage} style={{width: "300px"}} />
-    
-</div>
-)}
-<button onClick={handleDogUpload}> Save it! </button>
-</div>
-    </>
+    <div className="section">
+      <h4>Fetch the Dog</h4>
+      <button onClick={fetchDogImage} className="btn secondary">Doggy</button>
+      {displayDogImage && (
+        <div className="image-preview">
+          <img src={displayDogImage} alt="Dog" />
+        </div>
+      )}
+      <button onClick={handleDogUpload} className="btn">Save it!</button>
+    </div>
+  </div>
+);
 
-
-  );
 }
  
  
